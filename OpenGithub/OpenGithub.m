@@ -7,6 +7,8 @@
 //
 
 #import "OpenGithub.h"
+#import "BranchSelectView.h"
+
 
 @interface OpenGithub()
 
@@ -14,6 +16,8 @@
 
 @property (nonatomic, assign) NSUInteger startLine;
 @property (nonatomic, assign) NSUInteger endLine;
+
+@property (nonatomic) BranchSelectView *branchSelectView;
 
 @end
 
@@ -43,6 +47,8 @@
                    name:NSTextViewDidChangeSelectionNotification
                  object:nil];
 
+        // ブランチの選択時に表示されるビューの初期化
+        self.branchSelectView = [[BranchSelectView alloc] initWithWindowNibName:@"BranchSelectView"];
     }
     return self;
 
@@ -135,6 +141,10 @@
     }
 
 
+    // ブランチを選択するビューの表示
+    // 色変換用のWindowを表示
+    //self.branchSelectView = [[BranchSelectView alloc] initWithWindowNibName:@"BranchSelectView"];
+    [self.branchSelectView showWindow:self];
 
 
     return nil;

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D77FDCAC1C751DAC00C8EEC6 /* BranchSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = D77FDCAA1C751DAC00C8EEC6 /* BranchSelectView.m */; };
+		D77FDCAD1C751DAC00C8EEC6 /* BranchSelectView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D77FDCAB1C751DAC00C8EEC6 /* BranchSelectView.xib */; };
 		D79EF1FA1C745D840027E17F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79EF1F91C745D840027E17F /* AppKit.framework */; };
 		D79EF1FC1C745D840027E17F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79EF1FB1C745D840027E17F /* Foundation.framework */; };
 		D79EF2001C745D840027E17F /* OpenGithub.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = D79EF1FF1C745D840027E17F /* OpenGithub.xcscheme */; };
@@ -15,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D77FDCA91C751DAC00C8EEC6 /* BranchSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchSelectView.h; sourceTree = "<group>"; };
+		D77FDCAA1C751DAC00C8EEC6 /* BranchSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchSelectView.m; sourceTree = "<group>"; };
+		D77FDCAB1C751DAC00C8EEC6 /* BranchSelectView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BranchSelectView.xib; sourceTree = "<group>"; };
 		D79EF1F61C745D840027E17F /* OpenGithub.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenGithub.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		D79EF1F91C745D840027E17F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		D79EF1FB1C745D840027E17F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -74,6 +79,9 @@
 				D79EF2051C745D840027E17F /* NSObject_Extension.m */,
 				D79EF2071C745D840027E17F /* Info.plist */,
 				D79EF1FE1C745D840027E17F /* Supporting Files */,
+				D77FDCA91C751DAC00C8EEC6 /* BranchSelectView.h */,
+				D77FDCAA1C751DAC00C8EEC6 /* BranchSelectView.m */,
+				D77FDCAB1C751DAC00C8EEC6 /* BranchSelectView.xib */,
 			);
 			path = OpenGithub;
 			sourceTree = "<group>";
@@ -142,6 +150,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D77FDCAD1C751DAC00C8EEC6 /* BranchSelectView.xib in Resources */,
 				D79EF2001C745D840027E17F /* OpenGithub.xcscheme in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +162,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D77FDCAC1C751DAC00C8EEC6 /* BranchSelectView.m in Sources */,
 				D79EF2031C745D840027E17F /* OpenGithub.m in Sources */,
 				D79EF2061C745D840027E17F /* NSObject_Extension.m in Sources */,
 			);
@@ -283,6 +293,7 @@
 				D79EF20C1C745D840027E17F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
