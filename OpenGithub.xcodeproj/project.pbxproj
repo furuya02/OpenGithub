@@ -1,0 +1,290 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D79EF1FA1C745D840027E17F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79EF1F91C745D840027E17F /* AppKit.framework */; };
+		D79EF1FC1C745D840027E17F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79EF1FB1C745D840027E17F /* Foundation.framework */; };
+		D79EF2001C745D840027E17F /* OpenGithub.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = D79EF1FF1C745D840027E17F /* OpenGithub.xcscheme */; };
+		D79EF2031C745D840027E17F /* OpenGithub.m in Sources */ = {isa = PBXBuildFile; fileRef = D79EF2021C745D840027E17F /* OpenGithub.m */; };
+		D79EF2061C745D840027E17F /* NSObject_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = D79EF2051C745D840027E17F /* NSObject_Extension.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D79EF1F61C745D840027E17F /* OpenGithub.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenGithub.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		D79EF1F91C745D840027E17F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		D79EF1FB1C745D840027E17F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		D79EF1FF1C745D840027E17F /* OpenGithub.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = OpenGithub.xcscheme; path = OpenGithub.xcodeproj/xcshareddata/xcschemes/OpenGithub.xcscheme; sourceTree = SOURCE_ROOT; };
+		D79EF2011C745D840027E17F /* OpenGithub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGithub.h; sourceTree = "<group>"; };
+		D79EF2021C745D840027E17F /* OpenGithub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGithub.m; sourceTree = "<group>"; };
+		D79EF2041C745D840027E17F /* NSObject_Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSObject_Extension.h; sourceTree = "<group>"; };
+		D79EF2051C745D840027E17F /* NSObject_Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSObject_Extension.m; sourceTree = "<group>"; };
+		D79EF2071C745D840027E17F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D79EF1F41C745D840027E17F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D79EF1FA1C745D840027E17F /* AppKit.framework in Frameworks */,
+				D79EF1FC1C745D840027E17F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D79EF1ED1C745D840027E17F = {
+			isa = PBXGroup;
+			children = (
+				D79EF1FD1C745D840027E17F /* OpenGithub */,
+				D79EF1F81C745D840027E17F /* Frameworks */,
+				D79EF1F71C745D840027E17F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D79EF1F71C745D840027E17F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D79EF1F61C745D840027E17F /* OpenGithub.xcplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D79EF1F81C745D840027E17F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D79EF1F91C745D840027E17F /* AppKit.framework */,
+				D79EF1FB1C745D840027E17F /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D79EF1FD1C745D840027E17F /* OpenGithub */ = {
+			isa = PBXGroup;
+			children = (
+				D79EF2011C745D840027E17F /* OpenGithub.h */,
+				D79EF2021C745D840027E17F /* OpenGithub.m */,
+				D79EF2041C745D840027E17F /* NSObject_Extension.h */,
+				D79EF2051C745D840027E17F /* NSObject_Extension.m */,
+				D79EF2071C745D840027E17F /* Info.plist */,
+				D79EF1FE1C745D840027E17F /* Supporting Files */,
+			);
+			path = OpenGithub;
+			sourceTree = "<group>";
+		};
+		D79EF1FE1C745D840027E17F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D79EF1FF1C745D840027E17F /* OpenGithub.xcscheme */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D79EF1F51C745D840027E17F /* OpenGithub */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D79EF20A1C745D840027E17F /* Build configuration list for PBXNativeTarget "OpenGithub" */;
+			buildPhases = (
+				D79EF1F21C745D840027E17F /* Sources */,
+				D79EF1F31C745D840027E17F /* Resources */,
+				D79EF1F41C745D840027E17F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenGithub;
+			productName = OpenGithub;
+			productReference = D79EF1F61C745D840027E17F /* OpenGithub.xcplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D79EF1EE1C745D840027E17F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = SAPPOROWORKS;
+				TargetAttributes = {
+					D79EF1F51C745D840027E17F = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = D79EF1F11C745D840027E17F /* Build configuration list for PBXProject "OpenGithub" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D79EF1ED1C745D840027E17F;
+			productRefGroup = D79EF1F71C745D840027E17F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D79EF1F51C745D840027E17F /* OpenGithub */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D79EF1F31C745D840027E17F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D79EF2001C745D840027E17F /* OpenGithub.xcscheme in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D79EF1F21C745D840027E17F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D79EF2031C745D840027E17F /* OpenGithub.m in Sources */,
+				D79EF2061C745D840027E17F /* NSObject_Extension.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D79EF2081C745D840027E17F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		D79EF2091C745D840027E17F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+			};
+			name = Release;
+		};
+		D79EF20B1C745D840027E17F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				INFOPLIST_FILE = OpenGithub/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.ne.sapporoworks.OpenGithub;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Debug;
+		};
+		D79EF20C1C745D840027E17F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				INFOPLIST_FILE = OpenGithub/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.ne.sapporoworks.OpenGithub;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D79EF1F11C745D840027E17F /* Build configuration list for PBXProject "OpenGithub" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D79EF2081C745D840027E17F /* Debug */,
+				D79EF2091C745D840027E17F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D79EF20A1C745D840027E17F /* Build configuration list for PBXNativeTarget "OpenGithub" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D79EF20B1C745D840027E17F /* Debug */,
+				D79EF20C1C745D840027E17F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D79EF1EE1C745D840027E17F /* Project object */;
+}
