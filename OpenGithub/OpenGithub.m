@@ -38,18 +38,11 @@
                selector:@selector(didApplicationFinishLaunchingNotification:)
                    name:NSApplicationDidFinishLaunchingNotification
                  object:nil];
-
-//        [nc addObserver:self
-//               selector:@selector(fetchActiveIDEWorkspaceWindow:)
-//                   name:NSWindowDidUpdateNotification
-//                 object:nil];
-
         [nc addObserver:self
                selector:@selector(sourceTextViewSelectionDidChange:)
                    name:NSTextViewDidChangeSelectionNotification
                  object:nil];
-        
-        
+
     }
     return self;
 
@@ -61,13 +54,12 @@
     //removeObserver
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
     
-    // Create menu items, initialize UI, etc.
-    // Sample Menu Item:
     NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
     if (menuItem) {
         [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
-        NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Do Action" action:@selector(doMenuAction) keyEquivalent:@""];
+        NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open Github" action:@selector(doAction) keyEquivalent:@""];
         //[actionMenuItem setKeyEquivalentModifierMask:NSAlphaShiftKeyMask | NSControlKeyMask];
+        [actionMenuItem setKeyEquivalentModifierMask: NSAlternateKeyMask];
         [actionMenuItem setTarget:self];
         [[menuItem submenu] addItem:actionMenuItem];
     }
@@ -87,39 +79,84 @@
     }
 }
 
-- (NSURL *)doMenuAction
+- (NSURL *)doAction
 {
     NSArray *workspaceWindowControllers = [NSClassFromString(@"IDEWorkspaceWindowController") valueForKey:@"workspaceWindowControllers"];
+
+    NSString *directory = nil;
+    NSString *fileName = @"";
 
     for (id controller in workspaceWindowControllers) {
         id window = [controller performSelector:@selector(window)];
         if ( [window isEqual:[NSApp keyWindow]]) {
             id workSpace = [controller valueForKey:@"_workspace"];
+
+
             id filePath = [workSpace performSelector:@selector(representingFilePath)];
             NSString *workspacePath = [filePath performSelector:@selector(pathString)];
+
+            directory = [workspacePath stringByDeletingLastPathComponent];
+
+
             id editorArea = [controller performSelector:@selector(editorArea)];
             id document = [editorArea performSelector:@selector(primaryEditorDocument)];
-            NSString *fileName = [document fileURL];
-            NSLog(@"%@",fileName);
+            fileName = [document fileURL];
         }
     }
 
+    if(directory!=nil){
+//        NSMutableArray *array = ;
+        for (NSString *text in [self shell:directory :@"git branch -r"]) {
+
+            NSRange searchResult = [text rangeOfString: @"HEAD"];
+            if(searchResult.location == NSNotFound){ // HEADの無い行だけ採用
+                // 空白、改行を削除
+                NSString *tmp = [(NSString*)text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                // 先頭の「origin/」を削除
+                tmp = [tmp substringFromIndex:(NSUInteger)7];
+                NSLog(tmp);
+
+            }
+        }
+        for (NSString *text in [self shell:directory :@"git remote -v"]) {
+            NSRange searchResult = [text rangeOfString: @"(fetch)"]; // (fetch)のある行だけ採用
+            if(searchResult.location != NSNotFound){
+                NSString *tmp = [(NSString*)text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                
+
+                NSLog(tmp);
+            }
+        }
+    }
+    return nil;
+}
+
+- (NSMutableArray *)shell:(NSString *)directory :(NSString *)command {
+
+    NSString *str = [NSString stringWithFormat:@"cd %@;%@",directory,command];
     NSTask *task = [[NSTask alloc] init];
     NSPipe *pipe = [[NSPipe alloc] init];
     [task setLaunchPath: @"/bin/sh"];
-    [task setArguments: [NSArray arrayWithObjects: @"-c", @"cd /Users/hirauchishinichi/Documents/work3/OpenGithub; git status", nil]];
+    [task setArguments: [NSArray arrayWithObjects: @"-c", str, nil]];
     [task setStandardOutput:pipe];
     [task launch];
 
     NSFileHandle *handle = [pipe fileHandleForReading];
     NSData *data = [handle  readDataToEndOfFile];
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSString *lines = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
-    NSLog(@"===============================");
-    NSLog(string);
-    NSLog(@"===============================");
 
-    return nil;
+    NSMutableArray *array = [NSMutableArray array]; // 空の配列
+
+    NSUInteger lineEnd = 0;
+    while (lineEnd < [lines length]){
+        NSRange currentRange = [lines lineRangeForRange:NSMakeRange(lineEnd, 0)];
+        NSString *currentLine = [lines substringWithRange:currentRange];
+        [array addObject:currentLine];
+        lineEnd = currentRange.location + currentRange.length;
+    }
+
+    return array;
 }
 
 
