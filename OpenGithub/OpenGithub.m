@@ -122,9 +122,14 @@
             NSRange searchResult = [text rangeOfString: @"(fetch)"]; // (fetch)のある行だけ採用
             if(searchResult.location != NSNotFound){
                 NSString *tmp = [(NSString*)text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                
 
-                NSLog(tmp);
+
+                NSCharacterSet *spr = [NSCharacterSet characterSetWithCharactersInString:@" \t"];
+                NSArray *arry = [tmp componentsSeparatedByCharactersInSet:spr];
+                if (arry.count == 3 ){
+                    tmp = [arry objectAtIndex:1];
+                    NSLog(tmp);
+                }
             }
         }
     }
