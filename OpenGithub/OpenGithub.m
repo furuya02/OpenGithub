@@ -54,11 +54,10 @@
     //removeObserver
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
     
-    NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
+    NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"View"];
     if (menuItem) {
         [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
-        NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open Github" action:@selector(doAction) keyEquivalent:@""];
-        //[actionMenuItem setKeyEquivalentModifierMask:NSAlphaShiftKeyMask | NSControlKeyMask];
+        NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Github" action:@selector(doAction) keyEquivalent:@"g"];
         [actionMenuItem setKeyEquivalentModifierMask: NSAlternateKeyMask];
         [actionMenuItem setTarget:self];
         [[menuItem submenu] addItem:actionMenuItem];
@@ -81,41 +80,37 @@
 
 - (NSURL *)doAction
 {
+    // ディスク上のディレクトリとアクテブトなっているファイル名の取得
     NSArray *workspaceWindowControllers = [NSClassFromString(@"IDEWorkspaceWindowController") valueForKey:@"workspaceWindowControllers"];
-
     NSString *directory = nil;
     NSString *fileName = @"";
-
     for (id controller in workspaceWindowControllers) {
         id window = [controller performSelector:@selector(window)];
         if ( [window isEqual:[NSApp keyWindow]]) {
             id workSpace = [controller valueForKey:@"_workspace"];
-
-
             id filePath = [workSpace performSelector:@selector(representingFilePath)];
             NSString *workspacePath = [filePath performSelector:@selector(pathString)];
-
             directory = [workspacePath stringByDeletingLastPathComponent];
-
 
             id editorArea = [controller performSelector:@selector(editorArea)];
             id document = [editorArea performSelector:@selector(primaryEditorDocument)];
-            fileName = [document fileURL];
+            NSString *fileFullName = [document fileURL];
+            fileName = [fileFullName lastPathComponent];
         }
     }
 
+    // ペースURLとブランチの取得
+    NSMutableArray *branches = [NSMutableArray array];
+    NSString *baseUrl = @"";
     if(directory!=nil){
-//        NSMutableArray *array = ;
         for (NSString *text in [self shell:directory :@"git branch -r"]) {
-
             NSRange searchResult = [text rangeOfString: @"HEAD"];
             if(searchResult.location == NSNotFound){ // HEADの無い行だけ採用
                 // 空白、改行を削除
-                NSString *tmp = [(NSString*)text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                NSString *tmp = [(NSString*)text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 // 先頭の「origin/」を削除
                 tmp = [tmp substringFromIndex:(NSUInteger)7];
-                NSLog(tmp);
-
+                [branches addObject:tmp];
             }
         }
         for (NSString *text in [self shell:directory :@"git remote -v"]) {
@@ -123,19 +118,29 @@
             if(searchResult.location != NSNotFound){
                 NSString *tmp = [(NSString*)text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
-
                 NSCharacterSet *spr = [NSCharacterSet characterSetWithCharactersInString:@" \t"];
                 NSArray *arry = [tmp componentsSeparatedByCharactersInSet:spr];
                 if (arry.count == 3 ){
-                    tmp = [arry objectAtIndex:1];
-                    NSLog(tmp);
+                    baseUrl = [arry objectAtIndex:1];
                 }
             }
         }
     }
+    // アクセスURLの編集
+    NSMutableArray *urls = [NSMutableArray array];
+    NSString *projectName = [baseUrl lastPathComponent];
+    for (NSString *branch in branches) {
+        NSString *url = [NSString stringWithFormat:@"%@/blob/%@/%@/%@",baseUrl,branch,projectName,fileName];
+        [urls addObject:url];
+    }
+
+
+
+
     return nil;
 }
 
+// コマンド実行して、その出力を行単位で取得する
 - (NSMutableArray *)shell:(NSString *)directory :(NSString *)command {
 
     NSString *str = [NSString stringWithFormat:@"cd %@;%@",directory,command];
@@ -163,17 +168,6 @@
 
     return array;
 }
-
-
-
-
-// Sample Action, for menu item:
-//- (void)doMenuAction
-//{
-//    NSAlert *alert = [[NSAlert alloc] init];
-//    [alert setMessageText:@"Hello, World"];
-//    [alert runModal];
-//}
 
 - (void)dealloc
 {
