@@ -7,22 +7,23 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BranchSelectView">
             <connections>
+                <outlet property="pulldown" destination="lyT-cg-tHm" id="ULk-fS-Tx7"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+        <window title="Open Github" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+            <rect key="contentRect" x="196" y="240" width="401" height="95"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <rect key="frame" x="0.0" y="0.0" width="401" height="95"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cbI-t3-9cx">
-                        <rect key="frame" x="22" y="154" width="81" height="32"/>
+                        <rect key="frame" x="306" y="13" width="81" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7Sf-Xd-8KU">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -30,9 +31,26 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="tapOkButton:" target="-2" id="5R8-sm-i6f"/>
+                        </connections>
                     </button>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lyT-cg-tHm">
+                        <rect key="frame" x="16" y="51" width="368" height="26"/>
+                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="right" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="emM-24-FyO" id="Nc8-2u-buK">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" id="pqF-b1-n0S">
+                                <items>
+                                    <menuItem title="Item 1" state="on" id="emM-24-FyO"/>
+                                    <menuItem title="Item 2" id="bfP-7r-ko0"/>
+                                    <menuItem title="Item 3" id="FJt-4G-Lob"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                    </popUpButton>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PsX-01-86y">
-                        <rect key="frame" x="103" y="154" width="81" height="32"/>
+                        <rect key="frame" x="225" y="13" width="81" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PP5-K8-mCF">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -40,12 +58,16 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="tapCancelButton:" target="-2" id="Cdq-e1-riv"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
+            <point key="canvasLocation" x="493.5" y="189.5"/>
         </window>
     </objects>
 </document>

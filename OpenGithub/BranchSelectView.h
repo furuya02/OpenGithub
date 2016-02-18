@@ -10,4 +10,6 @@
 
 @interface BranchSelectView : NSWindowController
 
+- (void)initWithBranches:(NSArray*)branches urls:(NSArray *)urls;
+
 @end

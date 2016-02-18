@@ -142,8 +142,7 @@
 
 
     // ブランチを選択するビューの表示
-    // 色変換用のWindowを表示
-    //self.branchSelectView = [[BranchSelectView alloc] initWithWindowNibName:@"BranchSelectView"];
+    [self.branchSelectView initWithBranches:branches urls:urls];
     [self.branchSelectView showWindow:self];
 
 
