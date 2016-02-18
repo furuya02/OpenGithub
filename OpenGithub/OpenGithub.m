@@ -7,6 +7,8 @@
 //
 
 #import "OpenGithub.h"
+#import "BranchSelectView.h"
+
 
 @interface OpenGithub()
 
@@ -14,6 +16,8 @@
 
 @property (nonatomic, assign) NSUInteger startLine;
 @property (nonatomic, assign) NSUInteger endLine;
+
+@property (nonatomic) BranchSelectView *branchSelectView;
 
 @end
 
@@ -38,18 +42,13 @@
                selector:@selector(didApplicationFinishLaunchingNotification:)
                    name:NSApplicationDidFinishLaunchingNotification
                  object:nil];
-
-//        [nc addObserver:self
-//               selector:@selector(fetchActiveIDEWorkspaceWindow:)
-//                   name:NSWindowDidUpdateNotification
-//                 object:nil];
-
         [nc addObserver:self
                selector:@selector(sourceTextViewSelectionDidChange:)
                    name:NSTextViewDidChangeSelectionNotification
                  object:nil];
-        
-        
+
+        // ブランチの選択時に表示されるビューの初期化
+        self.branchSelectView = [[BranchSelectView alloc] initWithWindowNibName:@"BranchSelectView"];
     }
     return self;
 
@@ -61,13 +60,11 @@
     //removeObserver
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
     
-    // Create menu items, initialize UI, etc.
-    // Sample Menu Item:
-    NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
+    NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"View"];
     if (menuItem) {
         [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
-        NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Do Action" action:@selector(doMenuAction) keyEquivalent:@""];
-        //[actionMenuItem setKeyEquivalentModifierMask:NSAlphaShiftKeyMask | NSControlKeyMask];
+        NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Github" action:@selector(doAction) keyEquivalent:@"g"];
+        [actionMenuItem setKeyEquivalentModifierMask: NSAlternateKeyMask];
         [actionMenuItem setTarget:self];
         [[menuItem submenu] addItem:actionMenuItem];
     }
@@ -87,51 +84,99 @@
     }
 }
 
-- (NSURL *)doMenuAction
+- (NSURL *)doAction
 {
+    // ディスク上のディレクトリとアクテブトなっているファイル名の取得
     NSArray *workspaceWindowControllers = [NSClassFromString(@"IDEWorkspaceWindowController") valueForKey:@"workspaceWindowControllers"];
-
+    NSString *directory = nil;
+    NSString *fileName = @"";
     for (id controller in workspaceWindowControllers) {
         id window = [controller performSelector:@selector(window)];
         if ( [window isEqual:[NSApp keyWindow]]) {
             id workSpace = [controller valueForKey:@"_workspace"];
             id filePath = [workSpace performSelector:@selector(representingFilePath)];
             NSString *workspacePath = [filePath performSelector:@selector(pathString)];
+            directory = [workspacePath stringByDeletingLastPathComponent];
+
             id editorArea = [controller performSelector:@selector(editorArea)];
             id document = [editorArea performSelector:@selector(primaryEditorDocument)];
-            NSString *fileName = [document fileURL];
-            NSLog(@"%@",fileName);
+            NSString *fileFullName = [document fileURL];
+            fileName = [fileFullName lastPathComponent];
         }
     }
 
+    // ペースURLとブランチの取得
+    NSMutableArray *branches = [NSMutableArray array];
+    NSString *baseUrl = @"";
+    if(directory!=nil){
+        for (NSString *text in [self shell:directory :@"git branch -r"]) {
+            NSRange searchResult = [text rangeOfString: @"HEAD"];
+            if(searchResult.location == NSNotFound){ // HEADの無い行だけ採用
+                // 空白、改行を削除
+                NSString *tmp = [(NSString*)text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                // 先頭の「origin/」を削除
+                tmp = [tmp substringFromIndex:(NSUInteger)7];
+                [branches addObject:tmp];
+            }
+        }
+        for (NSString *text in [self shell:directory :@"git remote -v"]) {
+            NSRange searchResult = [text rangeOfString: @"(fetch)"]; // (fetch)のある行だけ採用
+            if(searchResult.location != NSNotFound){
+                NSString *tmp = [(NSString*)text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+                NSCharacterSet *spr = [NSCharacterSet characterSetWithCharactersInString:@" \t"];
+                NSArray *arry = [tmp componentsSeparatedByCharactersInSet:spr];
+                if (arry.count == 3 ){
+                    baseUrl = [arry objectAtIndex:1];
+                }
+            }
+        }
+    }
+    // アクセスURLの編集
+    NSMutableArray *urls = [NSMutableArray array];
+    NSString *projectName = [baseUrl lastPathComponent];
+    for (NSString *branch in branches) {
+        NSString *url = [NSString stringWithFormat:@"%@/blob/%@/%@/%@",baseUrl,branch,projectName,fileName];
+        [urls addObject:url];
+    }
+
+
+    // ブランチを選択するビューの表示
+    [self.branchSelectView initWithBranches:branches urls:urls];
+    [self.branchSelectView showWindow:self];
+
+
+    return nil;
+}
+
+// コマンド実行して、その出力を行単位で取得する
+- (NSMutableArray *)shell:(NSString *)directory :(NSString *)command {
+
+    NSString *str = [NSString stringWithFormat:@"cd %@;%@",directory,command];
     NSTask *task = [[NSTask alloc] init];
     NSPipe *pipe = [[NSPipe alloc] init];
     [task setLaunchPath: @"/bin/sh"];
-    [task setArguments: [NSArray arrayWithObjects: @"-c", @"cd /Users/hirauchishinichi/Documents/work3/OpenGithub; git status", nil]];
+    [task setArguments: [NSArray arrayWithObjects: @"-c", str, nil]];
     [task setStandardOutput:pipe];
     [task launch];
 
     NSFileHandle *handle = [pipe fileHandleForReading];
     NSData *data = [handle  readDataToEndOfFile];
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSString *lines = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
-    NSLog(@"===============================");
-    NSLog(string);
-    NSLog(@"===============================");
 
-    return nil;
+    NSMutableArray *array = [NSMutableArray array]; // 空の配列
+
+    NSUInteger lineEnd = 0;
+    while (lineEnd < [lines length]){
+        NSRange currentRange = [lines lineRangeForRange:NSMakeRange(lineEnd, 0)];
+        NSString *currentLine = [lines substringWithRange:currentRange];
+        [array addObject:currentLine];
+        lineEnd = currentRange.location + currentRange.length;
+    }
+
+    return array;
 }
-
-
-
-
-// Sample Action, for menu item:
-//- (void)doMenuAction
-//{
-//    NSAlert *alert = [[NSAlert alloc] init];
-//    [alert setMessageText:@"Hello, World"];
-//    [alert runModal];
-//}
 
 - (void)dealloc
 {
